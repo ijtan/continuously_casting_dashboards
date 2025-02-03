@@ -190,9 +190,7 @@ class ContinuouslyCastingDashboards:
             _LOGGER.debug("---")
 
             if "not found" in stderr_decode and not is_recurse:
-                _LOGGER.error('-=-=-=-='*300)
-                _LOGGER.debug("huh not found - insta retry check")
-                _LOGGER.debug("woke up, running catt scan")
+                _LOGGER.warning('Specified device was not found... scanning and retrying')
                 scan_process = await asyncio.create_subprocess_exec(
                 "catt",
                 "scan",
@@ -205,23 +203,21 @@ class ContinuouslyCastingDashboards:
                 _LOGGER.debug("scanned, got err:")
                 _LOGGER.debug(stderr_scan.decode())
                 _LOGGER.debug("---")
-
-
-                _LOGGER.debug("wait for 30 seconds before retrying")
-                await asyncio.sleep(30)
-                _LOGGER.debug("woke up, running catt scan")
-                scan_process = await asyncio.create_subprocess_exec(
-                "catt",
-                "scan",
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                )
-                stdout_scan, stderr_scan = await asyncio.wait_for(scan_process.communicate(), timeout=30)
-                _LOGGER.debug("scanned, got out:")
-                _LOGGER.debug(stdout_scan.decode())
-                _LOGGER.debug("scanned, got err:")
-                _LOGGER.debug(stderr_scan.decode())
-                _LOGGER.debug("---")
+                # _LOGGER.debug("wait for 30 seconds before retrying")
+                # await asyncio.sleep(30)
+                # _LOGGER.debug("woke up, running catt scan")
+                # scan_process = await asyncio.create_subprocess_exec(
+                # "catt",
+                # "scan",
+                # stdout=subprocess.PIPE,
+                # stderr=subprocess.PIPE,
+                # )
+                # stdout_scan, stderr_scan = await asyncio.wait_for(scan_process.communicate(), timeout=30)
+                # _LOGGER.debug("scanned, got out:")
+                # _LOGGER.debug(stdout_scan.decode())
+                # _LOGGER.debug("scanned, got err:")
+                # _LOGGER.debug(stderr_scan.decode())
+                # _LOGGER.debug("---")
                 _LOGGER.debug("recurse calling once")
                 return await self.check_status(device_name,state,True)
 
