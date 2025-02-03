@@ -202,6 +202,11 @@ class ContinuouslyCastingDashboards:
                 f"Asyncio TimeoutError checking {state} state for {device_name}: {e}"
             )
             return None
+        except e:
+            _LOGGER.error("huh we got some other error")
+            _LOGGER.error(e)
+            raise
+
 
     # Function to check if the dashboard state is active
     async def check_dashboard_state(self, device_name):
@@ -263,6 +268,9 @@ class ContinuouslyCastingDashboards:
         dashboard_state_name = self.device_map[device_name]["dashboard_state_name"]
         _LOGGER.debug("checking both states")
         status_output = await self.check_status(device_name, dashboard_state_name)
+        _LOGGER.debug("Both states return, the output was:")
+        _LOGGER.debug(status_output)
+        _LOGGER.debug("---")
 
         if status_output is None or not status_output:
             return False
