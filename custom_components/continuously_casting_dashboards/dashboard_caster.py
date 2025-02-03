@@ -550,6 +550,9 @@ class ContinuouslyCastingDashboards:
                     _LOGGER.info(
                         f"Local time is inside the allowed casting time for {device_name}. Start time: {start_time} - End time: {end_time}"
                     )
+
+                    _LOGGER.debug(f"Full state: {self.device_map[device_name]}")
+                    
                     # Skip normal flow if casting is triggered by state change
                     if self.casting_triggered_by_state_change:
                         _LOGGER.debug(
