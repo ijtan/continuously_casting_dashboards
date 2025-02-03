@@ -169,6 +169,7 @@ class ContinuouslyCastingDashboards:
     # Function to check the status of the device
     async def check_status(self, device_name, state):
         try:
+            _LOGGER.debug("about to call subprocess")
             process = await asyncio.create_subprocess_exec(
                 "catt",
                 "-d",
@@ -179,6 +180,9 @@ class ContinuouslyCastingDashboards:
             )
             stdout, stderr = await asyncio.wait_for(process.communicate(), timeout=30)
             status_output = stdout.decode()
+            _LOGGER.debug("catt status checked got output:")
+            _LOGGER.debug("status_output")
+            _LOGGER.debug("---")
             return status_output
         except subprocess.CalledProcessError as e:
             _LOGGER.error(
@@ -201,9 +205,14 @@ class ContinuouslyCastingDashboards:
 
     # Function to check if the dashboard state is active
     async def check_dashboard_state(self, device_name):
+         _LOGGER.debug("ez Starting check dash state")
+        _LOGGER.debug(self.device_map[device_name])
         try:
             dashboard_state_name = self.device_map[device_name]["dashboard_state_name"]
+            _LOGGER.debug("ok going to check status")
             status_output = await self.check_status(device_name, dashboard_state_name)
+            _LOGGER.debug("ez status checked")
+            _LOGGER.debug(self.device_map[device_name])
             _LOGGER.debug("check both states Status output is",status_output)
             if status_output is not None and dashboard_state_name in status_output:
                 _LOGGER.debug(
