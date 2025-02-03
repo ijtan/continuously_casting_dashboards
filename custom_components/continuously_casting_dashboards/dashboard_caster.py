@@ -237,6 +237,7 @@ class ContinuouslyCastingDashboards:
     async def check_media_state(self, device_name):
         try:
             media_state_name = self.device_map[device_name]["media_state_name"]
+            _LOGGER.debug("check_media_state checking status")
             status_output = await self.check_status(device_name, media_state_name)
             if status_output is not None and media_state_name in status_output:
                 _LOGGER.debug(
@@ -260,6 +261,7 @@ class ContinuouslyCastingDashboards:
     # Function to check if either dashboard or media state is active
     async def check_both_states(self, device_name):
         dashboard_state_name = self.device_map[device_name]["dashboard_state_name"]
+        _LOGGER.debug("checking both states")
         status_output = await self.check_status(device_name, dashboard_state_name)
 
         if status_output is None or not status_output:
@@ -319,6 +321,7 @@ class ContinuouslyCastingDashboards:
         try:
             _LOGGER.debug(f"Checking media status for {device_name}")
             media_state_name = self.device_map[device_name]["media_state_name"]
+            _LOGGER.debug("is media playing check")
             status_output = await self.check_status(device_name, media_state_name)
 
             _LOGGER.debug(f"Status output is {status_output}")
@@ -328,10 +331,11 @@ class ContinuouslyCastingDashboards:
                     _LOGGER.debug(f"Media is currently playing or paused on {device_name}")
                     return True
 
-                _LOGGER.debug(f"Media is not playing, waiting 5 seconds before re-checking...")
-                await asyncio.sleep(5)
+                _LOGGER.debug(f"Media is not playing, waiting 30 seconds before re-checking...")
+                await asyncio.sleep(30)
 
                 # Re-check the media status
+                _LOGGER.debug("is media playing rechecking")
                 status_output = await self.check_status(device_name, media_state_name)
                 if status_output and ("PLAYING" in status_output or "PAUSED" in status_output):
                     _LOGGER.debug(f"Media is now playing or paused on {device_name} after delay")
@@ -359,6 +363,7 @@ class ContinuouslyCastingDashboards:
             # test test test
             # check the current volume of the device, if fails, default to 5
             media_state_name = self.device_map[device_name]["media_state_name"]
+            _LOGGER.debug("check status from cast dash command")
             status_output = await self.check_status(device_name, media_state_name)
             try:
                 current_volume = status_output.rsplit(":", 1)[1].strip()
