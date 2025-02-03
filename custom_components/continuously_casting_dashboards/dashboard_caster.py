@@ -205,7 +205,7 @@ class ContinuouslyCastingDashboards:
 
     # Function to check if the dashboard state is active
     async def check_dashboard_state(self, device_name):
-         _LOGGER.debug("ez Starting check dash state")
+        _LOGGER.debug("ez Starting check dash state")
         _LOGGER.debug(self.device_map[device_name])
         try:
             dashboard_state_name = self.device_map[device_name]["dashboard_state_name"]
