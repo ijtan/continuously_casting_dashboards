@@ -183,6 +183,12 @@ class ContinuouslyCastingDashboards:
             _LOGGER.debug("catt status checked got output:")
             _LOGGER.debug(status_output)
             _LOGGER.debug("---")
+
+            stderr_decode = stderr.decode()
+            _LOGGER.debug("catt sterr decode:")
+            _LOGGER.debug(stderr_decode)
+            _LOGGER.debug("---")
+
             return status_output
         except subprocess.CalledProcessError as e:
             _LOGGER.error(
