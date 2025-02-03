@@ -311,6 +311,8 @@ class ContinuouslyCastingDashboards:
             media_state_name = self.device_map[device_name]["media_state_name"]
             status_output = await self.check_status(device_name, media_state_name)
 
+            _LOGGER.debug(f"Status output is {status_output}")
+
             if status_output:
                 if "PLAYING" in status_output or "PAUSED" in status_output:
                     _LOGGER.debug(f"Media is currently playing or paused on {device_name}")
