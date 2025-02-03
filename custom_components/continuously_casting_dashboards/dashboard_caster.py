@@ -204,6 +204,7 @@ class ContinuouslyCastingDashboards:
         try:
             dashboard_state_name = self.device_map[device_name]["dashboard_state_name"]
             status_output = await self.check_status(device_name, dashboard_state_name)
+            _LOGGER.debug("check both states Status output is",status_output)
             if status_output is not None and dashboard_state_name in status_output:
                 _LOGGER.debug(
                     f"Status output for {device_name} when checking for dashboard state '{dashboard_state_name}': {status_output}"
