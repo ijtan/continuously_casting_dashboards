@@ -192,7 +192,6 @@ class ContinuouslyCastingDashboards:
             if "not found" in stderr_decode and not is_recurse:
                 _LOGGER.error('-=-=-=-='*300)
                 _LOGGER.debug("huh not found - insta retry check")
-                await asyncio.sleep(30)
                 _LOGGER.debug("woke up, running catt scan")
                 scan_process = await asyncio.create_subprocess_exec(
                 "catt",
