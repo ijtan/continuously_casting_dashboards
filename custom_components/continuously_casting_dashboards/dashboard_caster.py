@@ -181,7 +181,7 @@ class ContinuouslyCastingDashboards:
             stdout, stderr = await asyncio.wait_for(process.communicate(), timeout=30)
             status_output = stdout.decode()
             _LOGGER.debug("catt status checked got output:")
-            _LOGGER.debug("status_output")
+            _LOGGER.debug(status_output)
             _LOGGER.debug("---")
             return status_output
         except subprocess.CalledProcessError as e:
