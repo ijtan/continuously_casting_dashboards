@@ -221,7 +221,8 @@ class ContinuouslyCastingDashboards:
                 _LOGGER.debug("recurse calling once")
                 return await self.check_status(device_name,state,True)
 
-            elif is_recurse:
+            elif "not found" in stderr_decode and is_recurse:
+                _LOGGER.error('Cast attempt failed twice: ',stderr_decode)
                 _LOGGER.debug("recurse refailed, bye")
 
             return status_output
